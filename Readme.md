@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Дима Олейниченко](https://up.htmlacademy.ru/javascript-individual/2/user/2596319).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Хапов](https://htmlacademy.ru/profile/id118459).
 
 ---
 
