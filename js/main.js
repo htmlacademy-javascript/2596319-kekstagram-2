@@ -66,7 +66,7 @@ function getPublicationInfo() {
     description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae..',
     likes: getRandomInteger(15, 200),
     commentsCount: getRandomInteger(0, 30),
-    comments: getComments(this.commentsCount)
+    comments: getComments(getRandomInteger(0, 30))
   };
 }
 
