@@ -69,7 +69,7 @@ function getPublicationInfo() {
   };
 }
 
-function getPublications(amount) {
+function getPublications(amount = 1) {
   const publications = [];
   for (let i = 0; i < amount; i++) {
     publications.push(getPublicationInfo());

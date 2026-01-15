@@ -1,3 +1,4 @@
 import {getPublications} from './publications.js';
+import { createThumbnails } from './thumbnails.js';
 
-console.table(getPublications(25));
+createThumbnails(getPublications(14));
