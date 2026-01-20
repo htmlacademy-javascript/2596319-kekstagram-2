@@ -18,10 +18,10 @@ function createThumbnail(photo) {
   return thumbnail;
 }
 
-function createThumbnails(photos) {
+function createThumbnails(thumbnails) {
   const fragment = document.createDocumentFragment();
-  photos.forEach((photo) => {
-    fragment.appendChild(createThumbnail(photo));
+  thumbnails.forEach((thumbnail) => {
+    fragment.appendChild(createThumbnail(thumbnail));
   });
   container.appendChild(fragment);
 }
