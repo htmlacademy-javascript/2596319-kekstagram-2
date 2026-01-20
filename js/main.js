@@ -1,4 +1,5 @@
 import {getPublications} from './publications.js';
 import { createThumbnails } from './thumbnails.js';
+import {openFullMode} from './fullthumbnails.js';
 
-createThumbnails(getPublications(14));
+createThumbnails(getPublications(25));

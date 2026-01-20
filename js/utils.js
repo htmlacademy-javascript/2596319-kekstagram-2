@@ -17,4 +17,4 @@ function getRandomIndex(arr) {
   return getRandomInteger(0, arr.length - 1);
 }
 
-export { generateId, getRandomInteger, getRandomIndex };
+export { generateId, getRandomInteger, getRandomIndex};
