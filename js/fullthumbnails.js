@@ -1,5 +1,3 @@
-import { getPublications, getComments } from "./publications.js";
-
 const bigPicture = document.querySelector('.big-picture');
 const close = document.querySelector('.big-picture__cancel');
 const bigImage = bigPicture.querySelector('.big-picture__img img');
@@ -14,15 +12,15 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 function onEscPress(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeFullMode();
+    onFullModeClose();
   }
-};
+}
 
-function closeFullMode() {
+function onFullModeClose() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  close.removeEventListener('click', closeFullMode);
+  close.removeEventListener('click', onFullModeClose);
   document.removeEventListener('keydown', onEscPress);
 }
 
@@ -38,26 +36,9 @@ function createCommentElement({ avatar, name, message }) {
   return comment;
 }
 
-let isLiked = false;
-function onLikeClick() {
-  let currentLikes = Number(likesCount.textContent);
-  if (isLiked === false) {
-    isLiked = true;
-    likesCount.textContent = currentLikes + 1;
-    likesCount.classList.add('likes-active');
-  } else {
-    isLiked = false;
-    likesCount.textContent = currentLikes - 1;
-    likesCount.classList.remove('likes-active');
-  }
-}
-
 function openFullMode(photo) {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  isLiked = false;
-  likesCount.classList.remove('likes-active');
-
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
   socialCaption.textContent = photo.description;
@@ -70,12 +51,10 @@ function openFullMode(photo) {
     fragment.appendChild(createCommentElement(comment));
   });
   commentsList.appendChild(fragment);
-
-  likesCount.addEventListener('click', onLikeClick);
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
-  close.addEventListener('click', closeFullMode);
+  close.addEventListener('click', onFullModeClose);
   document.addEventListener('keydown', onEscPress);
 }
 

@@ -6,6 +6,7 @@ const template = document.querySelector('#picture').content.querySelector('.pict
 function createThumbnail(photo) {
   const thumbnail = template.cloneNode(true);
 
+  thumbnail.querySelector('.picture__img').alt = photo.description;
   thumbnail.querySelector('.picture__img').src = photo.url;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
