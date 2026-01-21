@@ -9,19 +9,19 @@ const socialCaption = bigPicture.querySelector('.social__caption');
 const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
-function onEscPress(evt) {
+function documentEscapeHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    onFullModeClose();
+    fullModeCloseHandler();
   }
 }
 
-function onFullModeClose() {
+function fullModeCloseHandler() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  close.removeEventListener('click', onFullModeClose);
-  document.removeEventListener('keydown', onEscPress);
+  close.removeEventListener('click', fullModeCloseHandler);
+  document.removeEventListener('keydown', documentEscapeHandler);
 }
 
 function createCommentElement({ avatar, name, message }) {
@@ -54,8 +54,8 @@ function openFullMode(photo) {
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
-  close.addEventListener('click', onFullModeClose);
-  document.addEventListener('keydown', onEscPress);
+  close.addEventListener('click', fullModeCloseHandler);
+  document.addEventListener('keydown', documentEscapeHandler);
 }
 
 export {openFullMode};
