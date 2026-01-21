@@ -1,4 +1,4 @@
 import {getPublications} from './publications.js';
 import { createThumbnails } from './thumbnails.js';
 
-createThumbnails(getPublications(14));
+createThumbnails(getPublications(25));

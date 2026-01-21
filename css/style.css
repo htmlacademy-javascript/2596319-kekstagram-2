@@ -865,6 +865,10 @@ main {
   cursor: pointer;
 }
 
+.likes-active {
+  color: #e90000;
+}
+
 .likes-count:hover {
   color: #e90000;
 }

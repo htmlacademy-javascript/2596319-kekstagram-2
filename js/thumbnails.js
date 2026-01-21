@@ -1,27 +1,32 @@
-import {getPublications} from './publications.js';
+import { openFullMode } from './fullthumbnails.js';
 
-const template = document.querySelector('#picture').content;
 const container = document.querySelector('.pictures');
-const fragment = document.createDocumentFragment();
+const template = document.querySelector('#picture').content.querySelector('.picture');
+
 
 function createThumbnail(photo) {
   const thumbnail = template.cloneNode(true);
   const image = thumbnail.querySelector('.picture__img');
-
-  image.src = photo.url;
   image.alt = photo.description;
-
-  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
+  image.src = photo.url;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
+  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
+
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openFullMode(photo);
+  });
 
   return thumbnail;
 }
 
 function createThumbnails(thumbnails) {
+  const fragment = document.createDocumentFragment();
   thumbnails.forEach((thumbnail) => {
     fragment.appendChild(createThumbnail(thumbnail));
   });
   container.appendChild(fragment);
 }
+
 
 export {createThumbnails};

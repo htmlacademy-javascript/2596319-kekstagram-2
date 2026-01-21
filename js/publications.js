@@ -77,4 +77,4 @@ function getPublications(amount = 1) {
   return publications;
 }
 
-export { getPublications };
+export { getPublications, getComments };
