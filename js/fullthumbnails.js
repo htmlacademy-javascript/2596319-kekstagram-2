@@ -1,3 +1,5 @@
+const COMMENTS_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const close = document.querySelector('.big-picture__cancel');
 const bigImage = bigPicture.querySelector('.big-picture__img img');
@@ -6,8 +8,11 @@ const commentsCount = bigPicture.querySelector('.social__comment-shown-count');
 const totalCommentsCount = bigPicture.querySelector('.social__comment-total-count');
 const commentsList = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
-const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
+
+let currentComments = [];
+let commentsShown = 0;
+
 
 function onDocumentKeydown(evt) {
   if (evt.key === 'Escape') {
@@ -36,26 +41,35 @@ function createCommentElement({ avatar, name, message }) {
   return comment;
 }
 
+function renderComments() {
+  const fragment = document.createDocumentFragment();
+  const slicedComments = currentComments.slice(commentsShown, commentsShown + COMMENTS_STEP);
+  slicedComments.forEach((comment) => {
+    fragment.appendChild(createCommentElement(comment));
+  });
+  commentsList.appendChild(fragment);
+  commentsShown += slicedComments.length;
+  commentsCount.textContent = commentsShown;
+  commentsLoader.classList.toggle('hidden', commentsShown >= currentComments.length);
+}
+
+function onCommentsLoaderClick() {
+  renderComments();
+}
+
 function openFullMode(photo) {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   bigImage.src = photo.url;
   likesCount.textContent = photo.likes;
   socialCaption.textContent = photo.description;
-
   totalCommentsCount.textContent = photo.comments.length;
-  commentsCount.textContent = photo.comments.length;
   commentsList.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-  photo.comments.forEach((comment) => {
-    fragment.appendChild(createCommentElement(comment));
-  });
-  commentsList.appendChild(fragment);
-  commentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
-
+  commentsShown = 0;
+  currentComments = photo.comments;
+  renderComments();
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   close.addEventListener('click', onFullModeCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
-
 export {openFullMode};
