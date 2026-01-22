@@ -1,3 +1,5 @@
+const COMMENTS_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const close = document.querySelector('.big-picture__cancel');
 const bigImage = bigPicture.querySelector('.big-picture__img img');
@@ -7,7 +9,7 @@ const totalCommentsCount = bigPicture.querySelector('.social__comment-total-coun
 const commentsList = bigPicture.querySelector('.social__comments');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
-const commentsStep = 5;
+
 let currentComments = [];
 let commentsShown = 0;
 
@@ -25,7 +27,6 @@ function onFullModeCloseClick() {
 
   close.removeEventListener('click', onFullModeCloseClick);
   document.removeEventListener('keydown', onDocumentKeydown);
-  commentsLoader.removeEventListener('click', onLoadMorePhotosClick);
 }
 
 function createCommentElement({ avatar, name, message }) {
@@ -40,21 +41,20 @@ function createCommentElement({ avatar, name, message }) {
   return comment;
 }
 
-function onLoadMorePhotosClick() {
+function renderComments() {
   const fragment = document.createDocumentFragment();
-  const slicedComments = currentComments.slice(commentsShown, commentsShown + commentsStep);
+  const slicedComments = currentComments.slice(commentsShown, commentsShown + COMMENTS_STEP);
   slicedComments.forEach((comment) => {
     fragment.appendChild(createCommentElement(comment));
   });
   commentsList.appendChild(fragment);
   commentsShown += slicedComments.length;
   commentsCount.textContent = commentsShown;
+  commentsLoader.classList.toggle('hidden', commentsShown >= currentComments.length);
+}
 
-  if (commentsShown >= currentComments.length) {
-    commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
-  }
+function onCommentsLoaderClick() {
+  renderComments();
 }
 
 function openFullMode(photo) {
@@ -67,8 +67,8 @@ function openFullMode(photo) {
   commentsList.innerHTML = '';
   commentsShown = 0;
   currentComments = photo.comments;
-  onLoadMorePhotosClick();
-  commentsLoader.addEventListener('click', onLoadMorePhotosClick);
+  renderComments();
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   close.addEventListener('click', onFullModeCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
