@@ -31,3 +31,22 @@ console.log(extractNumbers('ECMAScript 2022'));
 console.log(extractNumbers('1 кефир, 0.5 батона'));
 console.log(extractNumbers('агент 007'));
 console.log(extractNumbers('а я томат'));
+
+function fitsInWorkDay(workDayStartTime, workDayEndTime, meetingStartTime, meetingDuration) {
+  function parseTime(time) {
+    const arr = time.split(':');
+    return +arr[0] * 60 + +arr[1];
+  }
+  const dayStart = parseTime(workDayStartTime);
+  const dayEnd = parseTime(workDayEndTime);
+  const meetingStart = parseTime(meetingStartTime);
+  const meetingEnd = meetingStart + meetingDuration;
+
+  return meetingStart >= dayStart && meetingEnd <= dayEnd;
+}
+
+console.log(fitsInWorkDay('08:00', '17:30', '14:00', 90));
+console.log(fitsInWorkDay('8:0', '10:0', '8:0', 120));
+console.log(fitsInWorkDay('08:00', '14:30', '14:00', 90));
+console.log(fitsInWorkDay('14:00', '17:30', '08:0', 90));
+console.log(fitsInWorkDay('8:00', '17:30', '08:00', 900));
