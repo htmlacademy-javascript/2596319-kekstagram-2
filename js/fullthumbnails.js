@@ -72,4 +72,5 @@ function openFullMode(photo) {
   close.addEventListener('click', onFullModeCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
+
 export {openFullMode};

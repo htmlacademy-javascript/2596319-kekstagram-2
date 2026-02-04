@@ -1,4 +1,4 @@
-function validateLength(string, symbolsAmount) {
+export function validateLength(string, symbolsAmount) {
   return string.length <= symbolsAmount;
 }
 console.log(validateLength('меньше20символов', 20));
