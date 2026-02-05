@@ -17,4 +17,8 @@ function getRandomIndex(arr) {
   return getRandomInteger(0, arr.length - 1);
 }
 
-export { generateId, getRandomInteger, getRandomIndex};
+function validateLength(string, symbolsAmount) {
+  return string.length <= symbolsAmount;
+}
+
+export { generateId, getRandomInteger, getRandomIndex, validateLength};
