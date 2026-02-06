@@ -20,6 +20,8 @@ const pristine = new Pristine(photoEditForm, {
 function openPhotoEditForm() {
   formOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  editFormClose.addEventListener('click', onCrossClick);
+  document.addEventListener('keydown', onDocumentKeydown);
 }
 
 function onDocumentKeydown(evt) {
@@ -96,6 +98,7 @@ function closePhotoEditForm() {
   formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  editFormClose.removeEventListener('click', onCrossClick);
   pristine.reset();
   photoEditForm.reset();
 }
@@ -105,7 +108,4 @@ function onCrossClick() {
 }
 
 fileUploadControl.addEventListener('change', onPhotoUpload);
-document.addEventListener('keydown', onDocumentKeydown);
-editFormClose.addEventListener('click', onCrossClick);
-
 export {openPhotoEditForm};
