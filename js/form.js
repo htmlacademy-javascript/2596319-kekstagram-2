@@ -2,6 +2,7 @@ import { validateLength } from './utils.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
+const MAX_COMMENTS_LENGTH = 140;
 
 const fileUploadControl = document.querySelector('.img-upload__input');
 const formOverlay = document.querySelector('.img-upload__overlay');
@@ -65,9 +66,9 @@ function getHashtagValidationError(inputString) {
   if (hasInvalidChars) {
     return 'Строка после решетки должна состоять из букв русского и латинского алфавитов и чисел';
   }
-  const isLessThan20Symbols = tags.every((tag) => tag.length <= 20);
+  const isLessThan20Symbols = tags.every((tag) => tag.length <= MAX_HASHTAG_LENGTH);
   if (!isLessThan20Symbols) {
-    return 'Максимальная длина хэш-тега - 20 символов, включая решетку';
+    return `Максимальная длина хэш-тега - ${MAX_HASHTAG_LENGTH} символов, включая решетку`;
   }
   const doesNotOnlyContainHash = tags.every((tag) => /^#(?!\s*$).+/.test(tag));
   if (!doesNotOnlyContainHash) {
@@ -83,8 +84,8 @@ pristine.addValidator(
 
 pristine.addValidator(
   commentInput,
-  (currentSymbolsAmount) => validateLength(currentSymbolsAmount, 140),
-  'Комментарий должен содержать до 140 символов, включая пробелы'
+  (currentSymbolsAmount) => validateLength(currentSymbolsAmount, MAX_COMMENTS_LENGTH),
+  `Комментарий должен содержать не более ${MAX_COMMENTS_LENGTH} символов, включая пробелы`
 );
 
 function onPhotoUpload() {
@@ -95,7 +96,6 @@ function closePhotoEditForm() {
   formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', onCrossClick);
   pristine.reset();
   photoEditForm.reset();
 }
@@ -105,7 +105,7 @@ function onCrossClick() {
 }
 
 fileUploadControl.addEventListener('change', onPhotoUpload);
-editFormClose.addEventListener('click', onCrossClick);
 document.addEventListener('keydown', onDocumentKeydown);
+editFormClose.addEventListener('click', onCrossClick);
 
 export {openPhotoEditForm};
