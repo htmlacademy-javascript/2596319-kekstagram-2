@@ -68,8 +68,9 @@ function openFullMode(photo) {
   commentsShown = 0;
   currentComments = photo.comments;
   renderComments();
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   close.addEventListener('click', onFullModeCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
 }
+commentsLoader.addEventListener('click', onCommentsLoaderClick);
+
 export {openFullMode};
