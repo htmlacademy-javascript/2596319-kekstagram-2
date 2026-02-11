@@ -7,47 +7,32 @@ const increaseScaleButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-function resizeImage(step, enlarge) {
+function resizeImage(step) {
   const currentValue = parseInt(scaleValue.value, 10);
+  const newValue = currentValue + step;
 
-  if (enlarge) {
-    const newValue = currentValue + step;
-
-    if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
-      scaleValue.value = `${newValue}%`;
-      imagePreview.style.transform = `scale(${newValue / 100})`;
-    }
-  } else {
-    const newValue = currentValue - step;
-
-    if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
-      scaleValue.value = `${newValue}%`;
-      imagePreview.style.transform = `scale(${newValue / 100})`;
-    }
+  if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
+    scaleValue.value = `${newValue}%`;
+    imagePreview.style.transform = `scale(${newValue / 100})`;
   }
 }
 
 function onScaleIncreaseButtonClick() {
-  resizeImage(SCALE_STEP, true);
+  resizeImage(SCALE_STEP);
 }
 
 function onScaleDecreaseButtonClick() {
-  resizeImage(SCALE_STEP, false);
+  resizeImage(-SCALE_STEP);
 }
 
 function initScale(reset) {
-  if (reset) {
-    scaleValue.value = `${MAX_SCALE_VALUE}%`;
-    imagePreview.style.transform = 'scale(1)';
-  } else {
-    scaleValue.value = `${MAX_SCALE_VALUE}%`;
-    imagePreview.style.transform = 'scale(1)';
+  scaleValue.value = `${MAX_SCALE_VALUE}%`;
+  imagePreview.style.transform = 'scale(1)';
+
+  if (!reset) {
     decreaseScaleButton.addEventListener('click', onScaleDecreaseButtonClick);
     increaseScaleButton.addEventListener('click', onScaleIncreaseButtonClick);
   }
-
 }
-
-initScale();
 
 export {initScale};
