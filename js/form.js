@@ -103,12 +103,12 @@ function closePhotoEditForm() {
   editFormClose.removeEventListener('click', onCrossClick);
   pristine.reset();
   photoEditForm.reset();
+  initScale(true);
+  resetSlider();
 }
 
 function onCrossClick() {
   closePhotoEditForm();
-  initScale(true);
-  resetSlider();
 }
 
 fileUploadControl.addEventListener('change', onPhotoUpload);
