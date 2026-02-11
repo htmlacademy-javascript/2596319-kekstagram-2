@@ -1,4 +1,6 @@
 import { validateLength } from './utils.js';
+import { initScale } from './scale.js';
+import { resetSlider } from './slider.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
@@ -105,7 +107,10 @@ function closePhotoEditForm() {
 
 function onCrossClick() {
   closePhotoEditForm();
+  initScale(true);
+  resetSlider();
 }
 
 fileUploadControl.addEventListener('change', onPhotoUpload);
+
 export {openPhotoEditForm};

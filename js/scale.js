@@ -7,39 +7,45 @@ const increaseScaleButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
 const imagePreview = document.querySelector('.img-upload__preview img');
 
-function increaseScale(step) {
+function resizeImage(step, enlarge) {
   const currentValue = parseInt(scaleValue.value, 10);
-  const newValue = currentValue + step;
 
-  if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
-    scaleValue.value = `${newValue}%`;
-    imagePreview.style.transform = `scale(${newValue / 100})`;
-  }
-}
+  if (enlarge) {
+    const newValue = currentValue + step;
 
-function decreaseScale(step) {
-  const currentValue = parseInt(scaleValue.value, 10);
-  const newValue = currentValue - step;
+    if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
+      scaleValue.value = `${newValue}%`;
+      imagePreview.style.transform = `scale(${newValue / 100})`;
+    }
+  } else {
+    const newValue = currentValue - step;
 
-  if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
-    scaleValue.value = `${newValue}%`;
-    imagePreview.style.transform = `scale(${newValue / 100})`;
+    if (newValue >= MIN_SCALE_VALUE && newValue <= MAX_SCALE_VALUE) {
+      scaleValue.value = `${newValue}%`;
+      imagePreview.style.transform = `scale(${newValue / 100})`;
+    }
   }
 }
 
 function onScaleIncreaseButtonClick() {
-  increaseScale(SCALE_STEP);
+  resizeImage(SCALE_STEP, true);
 }
 
 function onScaleDecreaseButtonClick() {
-  decreaseScale(SCALE_STEP);
+  resizeImage(SCALE_STEP, false);
 }
 
-function initScale() {
-  scaleValue.value = `${MAX_SCALE_VALUE}%`;
-  imagePreview.style.transform = 'scale(1)';
-  decreaseScaleButton.addEventListener('click', onScaleDecreaseButtonClick);
-  increaseScaleButton.addEventListener('click', onScaleIncreaseButtonClick);
+function initScale(reset) {
+  if (reset) {
+    scaleValue.value = `${MAX_SCALE_VALUE}%`;
+    imagePreview.style.transform = 'scale(1)';
+  } else {
+    scaleValue.value = `${MAX_SCALE_VALUE}%`;
+    imagePreview.style.transform = 'scale(1)';
+    decreaseScaleButton.addEventListener('click', onScaleDecreaseButtonClick);
+    increaseScaleButton.addEventListener('click', onScaleIncreaseButtonClick);
+  }
+
 }
 
 initScale();

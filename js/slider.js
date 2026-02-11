@@ -19,6 +19,14 @@ noUiSlider.create(slider, {
   },
 });
 
+const options = {
+  chrome: { range: { min: 0, max: 1 }, start: 1, step: 0.1 },
+  sepia: { range: { min: 0, max: 1 }, start: 1, step: 0.1 },
+  marvin: { range: { min: 0, max: 100 }, start: 100, step: 1 },
+  phobos: { range: { min: 0, max: 3 }, start: 3, step: 0.1 },
+  heat: { range: { min: 1, max: 3 }, start: 3, step: 0.1 }
+};
+
 function updateEffect() {
   const value = slider.noUiSlider.get();
   sliderValue.value = value;
@@ -50,15 +58,17 @@ effectsList.addEventListener('change', (evt) => {
 
   sliderContainer.classList.remove('hidden');
 
-  const options = {
-    chrome: { range: { min: 0, max: 1 }, start: 1, step: 0.1 },
-    sepia: { range: { min: 0, max: 1 }, start: 1, step: 0.1 },
-    marvin: { range: { min: 0, max: 100 }, start: 100, step: 1 },
-    phobos: { range: { min: 0, max: 3 }, start: 3, step: 0.1 },
-    heat: { range: { min: 1, max: 3 }, start: 3, step: 0.1 }
-  };
-
   slider.noUiSlider.updateOptions(options[effect]);
 });
 
-export {updateEffect};
+function resetSlider() {
+  imagePreview.style.filter = 'none';
+  sliderContainer.classList.add('hidden');
+  slider.noUiSlider.updateOptions({
+    range: { min: 0, max: 1 },
+    start: 1,
+    step: 0.1,
+  });
+}
+
+export {updateEffect, resetSlider};
