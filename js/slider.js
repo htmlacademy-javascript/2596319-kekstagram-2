@@ -71,4 +71,4 @@ function resetSlider() {
   });
 }
 
-export {updateEffect, resetSlider};
+export { resetSlider };
