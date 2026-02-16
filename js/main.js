@@ -1,8 +1,7 @@
-import {getPublications} from './publications.js';
-import { createThumbnails } from './thumbnails.js';
 import './form.js';
 import './slider.js';
 import { initScale } from './scale.js';
+import { addThumbnails } from './data.js';
 
+addThumbnails();
 initScale();
-createThumbnails(getPublications(25));
