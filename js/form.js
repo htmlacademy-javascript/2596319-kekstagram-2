@@ -109,17 +109,15 @@ function onPhotoUpload() {
   openPhotoEditForm();
 }
 
-function closePhotoEditForm(toSave = false) {
+function closePhotoEditForm() {
   formOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   editFormClose.removeEventListener('click', onCrossClick);
-  if (toSave === false) {
-    pristine.reset();
-    photoEditForm.reset();
-    initScale(true);
-    resetSlider();
-  }
+  pristine.reset();
+  photoEditForm.reset();
+  initScale(true);
+  resetSlider();
 }
 
 function onCrossClick() {
@@ -142,7 +140,6 @@ function initUserFormSubmit() {
         })
         .catch(() => {
           showErrorMessage();
-          closePhotoEditForm(true);
         })
         .finally(() => {
           unblockSubmitButton();

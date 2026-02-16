@@ -36,7 +36,6 @@ function showMessage(template, buttonClass) {
   });
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onBodyClick);
-  closePhotoEditForm();
 }
 
 function showDataErrorMessage(template) {
@@ -50,6 +49,7 @@ function showDataErrorMessage(template) {
 
 function showSuccessMessage() {
   showMessage(successTemplate, '.success__button');
+  closePhotoEditForm();
 }
 
 function showErrorMessage() {
