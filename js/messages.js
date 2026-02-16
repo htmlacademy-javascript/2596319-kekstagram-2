@@ -10,7 +10,7 @@ function closeMessage() {
   const messageElement = document.querySelector('.success') || document.querySelector('.error');
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.removeEventListener('click', onBodyClick);
+  document.removeEventListener('click', onDocumentClick);
 }
 
 function onDocumentKeydown(evt) {
@@ -20,11 +20,15 @@ function onDocumentKeydown(evt) {
   }
 }
 
-function onBodyClick(evt) {
+function onDocumentClick(evt) {
   const messageElement = document.querySelector('.success') || document.querySelector('.error');
   if (evt.target === messageElement) {
     closeMessage();
   }
+}
+
+function isMessageOpen() {
+  return document.querySelector('.error') || document.querySelector('.success');
 }
 
 function showMessage(template, buttonClass) {
@@ -35,7 +39,7 @@ function showMessage(template, buttonClass) {
     closeMessage();
   });
   document.addEventListener('keydown', onDocumentKeydown);
-  document.addEventListener('click', onBodyClick);
+  document.addEventListener('click', onDocumentClick);
 }
 
 function showDataErrorMessage(template) {
@@ -60,4 +64,4 @@ function showGetDataErrorMessage() {
   showDataErrorMessage(dataErrorTemplate);
 }
 
-export {showSuccessMessage, showErrorMessage, showGetDataErrorMessage};
+export {showSuccessMessage, showErrorMessage, showGetDataErrorMessage, isMessageOpen};

@@ -2,7 +2,7 @@ import { validateLength } from './utils.js';
 import { initScale } from './scale.js';
 import { resetSlider } from './slider.js';
 import { loadData, Route, Method } from './data.js';
-import { showSuccessMessage, showErrorMessage } from './messages.js';
+import { showSuccessMessage, showErrorMessage, isMessageOpen } from './messages.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
@@ -40,8 +40,9 @@ function unblockSubmitButton() {
 }
 
 function onDocumentKeydown(evt) {
+  const messageOpen = isMessageOpen();
   const isFieldFocused = document.activeElement === hashtagInput || document.activeElement === commentInput;
-  if (evt.key === 'Escape' && !isFieldFocused) {
+  if (evt.key === 'Escape' && !isFieldFocused && !messageOpen) {
     evt.preventDefault();
     closePhotoEditForm();
   }
@@ -122,7 +123,6 @@ function closePhotoEditForm() {
 
 function onCrossClick() {
   closePhotoEditForm();
-
 }
 
 function initUserFormSubmit() {
