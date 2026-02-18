@@ -1,6 +1,8 @@
 import { validateLength } from './utils.js';
 import { initScale } from './scale.js';
 import { resetSlider } from './slider.js';
+import { loadData, Route, Method } from './data.js';
+import { showSuccessMessage, showErrorMessage, getMessageElement } from './messages.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
@@ -12,6 +14,7 @@ const editFormClose = document.querySelector('.img-upload__cancel');
 const photoEditForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
+const submitButton = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(photoEditForm, {
   classTo: 'img-upload__field-wrapper',
@@ -26,9 +29,20 @@ function openPhotoEditForm() {
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
+function blockSubmitButton() {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Опубликовываю...';
+}
+
+function unblockSubmitButton() {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+}
+
 function onDocumentKeydown(evt) {
+  const messageOpen = !!getMessageElement();
   const isFieldFocused = document.activeElement === hashtagInput || document.activeElement === commentInput;
-  if (evt.key === 'Escape' && !isFieldFocused) {
+  if (evt.key === 'Escape' && !isFieldFocused && !messageOpen) {
     evt.preventDefault();
     closePhotoEditForm();
   }
@@ -103,14 +117,38 @@ function closePhotoEditForm() {
   editFormClose.removeEventListener('click', onCrossClick);
   pristine.reset();
   photoEditForm.reset();
-}
-
-function onCrossClick() {
-  closePhotoEditForm();
   initScale(true);
   resetSlider();
 }
 
+function onCrossClick() {
+  closePhotoEditForm();
+}
+
+function initUserFormSubmit() {
+  photoEditForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+
+      loadData(Route.SEND_DATA, Method.POST, formData)
+        .then(() => {
+          closePhotoEditForm();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          showErrorMessage();
+        })
+        .finally(() => {
+          unblockSubmitButton();
+        });
+    }
+  });
+}
+
+initUserFormSubmit();
 fileUploadControl.addEventListener('change', onPhotoUpload);
 
-export {openPhotoEditForm};
+export {openPhotoEditForm, closePhotoEditForm};
