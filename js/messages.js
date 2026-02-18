@@ -7,7 +7,7 @@ const errorTemplate = document.querySelector('#error').content.querySelector('.e
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 
 function closeMessage() {
-  const messageElement = document.querySelector('.success') || document.querySelector('.error');
+  const messageElement = getMessageElement();
   messageElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
   document.removeEventListener('click', onDocumentClick);
@@ -21,13 +21,13 @@ function onDocumentKeydown(evt) {
 }
 
 function onDocumentClick(evt) {
-  const messageElement = document.querySelector('.success') || document.querySelector('.error');
+  const messageElement = getMessageElement();
   if (evt.target === messageElement) {
     closeMessage();
   }
 }
 
-function isMessageOpen() {
+function getMessageElement() {
   return document.querySelector('.error') || document.querySelector('.success');
 }
 
@@ -64,4 +64,4 @@ function showGetDataErrorMessage() {
   showDataErrorMessage(dataErrorTemplate);
 }
 
-export {showSuccessMessage, showErrorMessage, showGetDataErrorMessage, isMessageOpen};
+export {showSuccessMessage, showErrorMessage, showGetDataErrorMessage, getMessageElement };
