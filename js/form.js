@@ -40,7 +40,7 @@ function unblockSubmitButton() {
 }
 
 function onDocumentKeydown(evt) {
-  const messageOpen = getMessageElement();
+  const messageOpen = !!getMessageElement();
   const isFieldFocused = document.activeElement === hashtagInput || document.activeElement === commentInput;
   if (evt.key === 'Escape' && !isFieldFocused && !messageOpen) {
     evt.preventDefault();
