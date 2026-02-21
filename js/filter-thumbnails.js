@@ -44,10 +44,9 @@ function initFilters(data, callback) {
     const filteredData = sortPhotos(data, target.id);
     clearPhotos();
     debouncedCallback(filteredData);
-    console.log('a');
   }
 
-  const filterButtonClickHandler = debouncedCallback(onFilterButtonClick);
   filterForm.addEventListener('click', onFilterButtonClick);
 }
+
 export {initFilters};
