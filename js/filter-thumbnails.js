@@ -30,7 +30,7 @@ function initFilters(data, callback) {
   showFilters();
   const debouncedCallback = debounce(callback, DEBOUNCE_DELAY);
 
-  function onFilterChange(evt) {
+  function onFilterButtonClick(evt) {
     const target = evt.target;
 
     if (!target.classList.contains('img-filters__button') ||
@@ -42,11 +42,12 @@ function initFilters(data, callback) {
     target.classList.add('img-filters__button--active');
 
     const filteredData = sortPhotos(data, target.id);
-    debouncedCallback(filteredData);
     clearPhotos();
+    debouncedCallback(filteredData);
+    console.log('a');
   }
 
-  filterForm.addEventListener('click', onFilterChange);
+  const filterButtonClickHandler = debouncedCallback(onFilterButtonClick);
+  filterForm.addEventListener('click', onFilterButtonClick);
 }
-
 export {initFilters};
