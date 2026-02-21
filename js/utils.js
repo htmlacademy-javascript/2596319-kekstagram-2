@@ -21,4 +21,12 @@ function validateLength(string, symbolsAmount) {
   return string.length <= symbolsAmount;
 }
 
-export { generateId, getRandomInteger, getRandomIndex, validateLength};
+function debounce(callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { generateId, getRandomInteger, getRandomIndex, validateLength, debounce};

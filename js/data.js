@@ -1,5 +1,3 @@
-import { createThumbnails } from './thumbnails.js';
-import { showGetDataErrorMessage } from './messages.js';
 const SERVER_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 const Route = {
@@ -12,7 +10,7 @@ const Method = {
   POST: 'POST',
 };
 
-function loadData(route, method = Method.GET, body = null) {
+function loadData(route = Route.GET_DATA, method = Method.GET, body = null) {
   return fetch(`${SERVER_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
@@ -25,13 +23,4 @@ function loadData(route, method = Method.GET, body = null) {
     });
 }
 
-async function addThumbnails() {
-  try {
-    const photos = await loadData(Route.GET_DATA);
-    createThumbnails(photos);
-  } catch {
-    showGetDataErrorMessage();
-  }
-}
-
-export { addThumbnails, loadData, Method, Route };
+export { loadData, Method, Route };
