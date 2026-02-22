@@ -54,13 +54,14 @@ function onDocumentKeydown(evt) {
 function initPhotoUpload() {
   const file = fileUploadControl.files[0];
   const fileName = file.name.toLowerCase();
+  const createLinkToPhoto = URL.createObjectURL(file);
 
   const valid = AVAILABLE_FILE_TYPES.some((type) => fileName.endsWith(type));
 
   if (valid) {
-    filePreview.src = URL.createObjectURL(file);
+    filePreview.src = createLinkToPhoto;
     effectPreviews.forEach((effectPreview) => {
-      effectPreview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+      effectPreview.style.backgroundImage = `url(${createLinkToPhoto})`;
     });
   }
 }
