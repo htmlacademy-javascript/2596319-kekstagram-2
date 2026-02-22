@@ -86,7 +86,7 @@ function getHashtagValidationError(inputString) {
   if (!inputString) {
     return true;
   }
-  const tags = inputString.trim().toLowerCase().split(' ');
+  const tags = inputString.trim().toLowerCase().split(/\s+/);
   if (tags.length > MAX_HASHTAGS) {
     return `Нельзя указать больше ${MAX_HASHTAGS} хэш-тегов`;
   }
@@ -98,15 +98,17 @@ function getHashtagValidationError(inputString) {
   if (!startsWithHash) {
     return 'Хэш-тег должен начинаться с символа #';
   }
-  const hasInvalidChars = tags.some((tag) => /[^#a-zа-яё0-9]/i.test(tag));
+
+  const hasInvalidChars = tags.some((tag) => /[^a-zа-яё0-9]/i.test(tag.slice(1)));
   if (hasInvalidChars) {
     return 'Строка после решетки должна состоять из букв русского и латинского алфавитов и чисел';
   }
+
   const isLessThan20Symbols = tags.every((tag) => tag.length <= MAX_HASHTAG_LENGTH);
   if (!isLessThan20Symbols) {
     return `Максимальная длина хэш-тега - ${MAX_HASHTAG_LENGTH} символов, включая решетку`;
   }
-  const doesNotOnlyContainHash = tags.every((tag) => /^#(?!\s*$).+/.test(tag));
+  const doesNotOnlyContainHash = tags.every((tag) => tag !== '#');
   if (!doesNotOnlyContainHash) {
     return 'Хэш-тег не может состоять из одной решетки';
   }

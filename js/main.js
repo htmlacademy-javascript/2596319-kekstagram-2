@@ -6,13 +6,17 @@ import { initFilters } from './filter-thumbnails.js';
 import { createThumbnails } from './thumbnails.js';
 import { showGetDataErrorMessage } from './messages.js';
 
-loadData().then((photos) => {
-  try {
-    createThumbnails(photos);
-    initFilters(photos, createThumbnails);
-  } catch {
+loadData()
+  .then((photos) => {
+    try {
+      createThumbnails(photos);
+      initFilters(photos, createThumbnails);
+    } catch {
+      showGetDataErrorMessage();
+    }
+  })
+  .catch(() => {
     showGetDataErrorMessage();
-  }
-});
+  });
 
 initScale();
