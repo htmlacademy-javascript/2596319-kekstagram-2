@@ -58,6 +58,9 @@ function initPhotoUpload() {
 
   if (valid) {
     filePreview.src = URL.createObjectURL(file);
+  } else {
+    showErrorMessage();
+    closePhotoEditForm();
   }
 }
 
