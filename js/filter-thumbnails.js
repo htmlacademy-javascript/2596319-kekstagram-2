@@ -28,25 +28,31 @@ function sortPhotos(photos, filterId) {
 
 function initFilters(data, callback) {
   showFilters();
-  const debouncedCallback = debounce(callback, DEBOUNCE_DELAY);
+  function renderPhotos(filterId) {
+    const filteredData = sortPhotos(data, filterId);
+    clearPhotos();
+    callback(filteredData);
+  }
+
+  const debouncedRender = debounce(renderPhotos, DEBOUNCE_DELAY);
 
   function onFilterButtonClick(evt) {
     const target = evt.target;
-
     if (!target.classList.contains('img-filters__button') ||
-        target.classList.contains('img-filters__button--active')) {
+        target.id === filterForm.querySelector('.img-filters__button--active')?.id) {
       return;
     }
+    const currentActive = filterForm.querySelector('.img-filters__button--active');
+    if (currentActive) {
+      currentActive.classList.remove('img-filters__button--active');
+    }
 
-    filterForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
     target.classList.add('img-filters__button--active');
-
-    const filteredData = sortPhotos(data, target.id);
-    clearPhotos();
-    debouncedCallback(filteredData);
+    debouncedRender(target.id);
   }
 
   filterForm.addEventListener('click', onFilterButtonClick);
 }
+
 
 export {initFilters};
