@@ -17,6 +17,7 @@ const hashtagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
 const filePreview = document.querySelector('.img-upload__preview img');
+const effectPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(photoEditForm, {
   classTo: 'img-upload__field-wrapper',
@@ -58,9 +59,9 @@ function initPhotoUpload() {
 
   if (valid) {
     filePreview.src = URL.createObjectURL(file);
-  } else {
-    showErrorMessage();
-    closePhotoEditForm();
+    effectPreviews.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
   }
 }
 
