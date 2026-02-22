@@ -7,6 +7,7 @@ import { showSuccessMessage, showErrorMessage, getMessageElement } from './messa
 const MAX_HASHTAGS = 5;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_COMMENTS_LENGTH = 140;
+const AVAILABLE_FILE_TYPES = ['png', 'jpg', 'jpeg'];
 
 const fileUploadControl = document.querySelector('.img-upload__input');
 const formOverlay = document.querySelector('.img-upload__overlay');
@@ -15,6 +16,7 @@ const photoEditForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
+const filePreview = document.querySelector('.img-upload__preview img');
 
 const pristine = new Pristine(photoEditForm, {
   classTo: 'img-upload__field-wrapper',
@@ -45,6 +47,17 @@ function onDocumentKeydown(evt) {
   if (evt.key === 'Escape' && !isFieldFocused && !messageOpen) {
     evt.preventDefault();
     closePhotoEditForm();
+  }
+}
+
+function initPhotoUpload() {
+  const file = fileUploadControl.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const valid = AVAILABLE_FILE_TYPES.some((type) => fileName.endsWith(type));
+
+  if (valid) {
+    filePreview.src = URL.createObjectURL(file);
   }
 }
 
@@ -108,6 +121,7 @@ pristine.addValidator(
 
 function onPhotoUpload() {
   openPhotoEditForm();
+  initPhotoUpload();
 }
 
 function closePhotoEditForm() {
@@ -150,5 +164,6 @@ function initUserFormSubmit() {
 
 initUserFormSubmit();
 fileUploadControl.addEventListener('change', onPhotoUpload);
+
 
 export {openPhotoEditForm, closePhotoEditForm};
