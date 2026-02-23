@@ -126,7 +126,7 @@ pristine.addValidator(
   `Комментарий должен содержать не более ${MAX_COMMENTS_LENGTH} символов, включая пробелы`
 );
 
-function onPhotoUpload() {
+function onPhotoUploadChange() {
   openPhotoEditForm();
   initPhotoUpload();
 }
@@ -170,7 +170,7 @@ function initUserFormSubmit() {
 }
 
 initUserFormSubmit();
-fileUploadControl.addEventListener('change', onPhotoUpload);
+fileUploadControl.addEventListener('change', onPhotoUploadChange);
 
 
 export {openPhotoEditForm, closePhotoEditForm};
