@@ -37,12 +37,13 @@ function initFilters(data, callback) {
   const debouncedRender = debounce(renderPhotos, DEBOUNCE_DELAY);
 
   function onFilterButtonClick(evt) {
+    const currentActive = filterForm.querySelector('.img-filters__button--active');
     const target = evt.target;
     if (!target.classList.contains('img-filters__button') ||
-        target.id === filterForm.querySelector('.img-filters__button--active')?.id) {
+        target.id === currentActive?.id) {
       return;
     }
-    const currentActive = filterForm.querySelector('.img-filters__button--active');
+
     if (currentActive) {
       currentActive.classList.remove('img-filters__button--active');
     }
