@@ -10,8 +10,8 @@ const Method = {
   POST: 'POST',
 };
 
-function loadData(route = Route.GET_DATA, method = Method.GET, body = null) {
-  return fetch(`${SERVER_URL}${route}`, { method, body })
+const loadData = (route = Route.GET_DATA, method = Method.GET, body = null) =>
+  fetch(`${SERVER_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`error ${response.status}`);
@@ -21,6 +21,5 @@ function loadData(route = Route.GET_DATA, method = Method.GET, body = null) {
     .catch((err) => {
       throw new Error(err);
     });
-}
 
 export { loadData, Method, Route };

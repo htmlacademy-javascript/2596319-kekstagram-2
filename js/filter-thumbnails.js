@@ -6,16 +6,16 @@ const DEBOUNCE_DELAY = 500;
 const filters = document.querySelector('.img-filters');
 const filterForm = filters.querySelector('.img-filters__form');
 
-function showFilters() {
+const showFilters = () => {
   filters.classList.remove('img-filters--inactive');
-}
+};
 
-function clearPhotos() {
+const clearPhotos = () => {
   const photos = document.querySelectorAll('.picture');
   photos.forEach((photo) => photo.remove());
-}
+};
 
-function sortPhotos(photos, filterId) {
+const sortPhotos = (photos, filterId) => {
   switch (filterId) {
     case 'filter-random':
       return [...photos].sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_PHOTOS);
@@ -24,19 +24,19 @@ function sortPhotos(photos, filterId) {
     default:
       return [...photos];
   }
-}
+};
 
-function initFilters(data, callback) {
+const initFilters = (data, callback) => {
   showFilters();
-  function renderPhotos(filterId) {
+  const renderPhotos = (filterId) => {
     const filteredData = sortPhotos(data, filterId);
     clearPhotos();
     callback(filteredData);
-  }
+  };
 
   const debouncedRender = debounce(renderPhotos, DEBOUNCE_DELAY);
 
-  function onFilterButtonClick(evt) {
+  const onFilterButtonClick = (evt) => {
     const currentActive = filterForm.querySelector('.img-filters__button--active');
     const target = evt.target;
     if (!target.classList.contains('img-filters__button') ||
@@ -50,10 +50,10 @@ function initFilters(data, callback) {
 
     target.classList.add('img-filters__button--active');
     debouncedRender(target.id);
-  }
+  };
 
   filterForm.addEventListener('click', onFilterButtonClick);
-}
+};
 
 
 export {initFilters};

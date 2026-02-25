@@ -3,8 +3,7 @@ import { openFullMode } from './fullthumbnails.js';
 const container = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-
-function createThumbnail(photo) {
+const createThumbnail = (photo) => {
   const thumbnail = template.cloneNode(true);
   const image = thumbnail.querySelector('.picture__img');
   image.alt = photo.description;
@@ -18,15 +17,15 @@ function createThumbnail(photo) {
   });
 
   return thumbnail;
-}
+};
 
-function createThumbnails(thumbnails) {
+const createThumbnails = (thumbnails) => {
   const fragment = document.createDocumentFragment();
   thumbnails.forEach((thumbnail) => {
     fragment.appendChild(createThumbnail(thumbnail));
   });
   container.appendChild(fragment);
-}
+};
 
 
 export {createThumbnails};
