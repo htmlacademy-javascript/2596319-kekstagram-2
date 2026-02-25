@@ -25,33 +25,35 @@ const pristine = new Pristine(photoEditForm, {
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-function openPhotoEditForm() {
-  formOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  editFormClose.addEventListener('click', onCrossClick);
-  document.addEventListener('keydown', onDocumentKeydown);
-}
-
-function blockSubmitButton() {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Опубликовываю...';
-}
-
-function unblockSubmitButton() {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
-}
-
-function onDocumentKeydown(evt) {
+const onDocumentKeydown = (evt) => {
   const messageOpen = !!getMessageElement();
   const isFieldFocused = document.activeElement === hashtagInput || document.activeElement === commentInput;
   if (evt.key === 'Escape' && !isFieldFocused && !messageOpen) {
     evt.preventDefault();
     closePhotoEditForm();
   }
-}
+};
 
-function initPhotoUpload() {
+const onCrossClick = () => closePhotoEditForm();
+
+const openPhotoEditForm = () => {
+  formOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  editFormClose.addEventListener('click', onCrossClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Опубликовываю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const initPhotoUpload = () => {
   const file = fileUploadControl.files[0];
   const fileName = file.name.toLowerCase();
   const createLinkToPhoto = URL.createObjectURL(file);
@@ -64,13 +66,11 @@ function initPhotoUpload() {
       effectPreview.style.backgroundImage = `url(${createLinkToPhoto})`;
     });
   }
-}
+};
 
-function hasValidHashtagFormat(hashtag) {
-  return /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
-}
+const hasValidHashtagFormat = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
 
-function validateHashtags(inputString) {
+const validateHashtags = (inputString) => {
   if (!inputString) {
     return true;
   }
@@ -80,9 +80,9 @@ function validateHashtags(inputString) {
   const isUnique = new Set(tags).size === tags.length;
 
   return isCorrectFormat && isCorrectCount && isUnique;
-}
+};
 
-function getHashtagValidationError(inputString) {
+const getHashtagValidationError = (inputString) => {
   if (!inputString) {
     return true;
   }
@@ -112,7 +112,7 @@ function getHashtagValidationError(inputString) {
   if (!doesNotOnlyContainHash) {
     return 'Хэш-тег не может состоять из одной решетки';
   }
-}
+};
 
 pristine.addValidator(
   hashtagInput,
@@ -126,10 +126,10 @@ pristine.addValidator(
   `Комментарий должен содержать не более ${MAX_COMMENTS_LENGTH} символов, включая пробелы`
 );
 
-function onPhotoUploadChange() {
+const onPhotoUploadChange = () => {
   openPhotoEditForm();
   initPhotoUpload();
-}
+};
 
 function closePhotoEditForm() {
   formOverlay.classList.add('hidden');
@@ -142,11 +142,7 @@ function closePhotoEditForm() {
   resetSlider();
 }
 
-function onCrossClick() {
-  closePhotoEditForm();
-}
-
-function initUserFormSubmit() {
+const initUserFormSubmit = () => {
   photoEditForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -167,7 +163,7 @@ function initUserFormSubmit() {
         });
     }
   });
-}
+};
 
 initUserFormSubmit();
 fileUploadControl.addEventListener('change', onPhotoUploadChange);

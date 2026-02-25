@@ -13,13 +13,12 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 let currentComments = [];
 let commentsShown = 0;
 
-
-function onDocumentKeydown(evt) {
+const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     onFullModeCloseClick();
   }
-}
+};
 
 function onFullModeCloseClick() {
   bigPicture.classList.add('hidden');
@@ -29,19 +28,22 @@ function onFullModeCloseClick() {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-function createCommentElement({ avatar, name, message }) {
+const createCommentElement = ({ avatar, name, message }) => {
   const comment = document.createElement('li');
   comment.classList.add('social__comment');
-
-  comment.innerHTML = `
-    <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
-    <p class="social__text">${message}</p>
-  `;
+  const authorAvatar = document.createElement('img');
+  authorAvatar.classList.add('social__picture');
+  authorAvatar.src = avatar;
+  authorAvatar.alt = name;
+  const text = document.createElement('p');
+  text.classList.add('social__text');
+  text.textContent = message;
+  comment.append(authorAvatar, text);
 
   return comment;
-}
+};
 
-function renderComments() {
+const renderComments = () => {
   const fragment = document.createDocumentFragment();
   const slicedComments = currentComments.slice(commentsShown, commentsShown + COMMENTS_STEP);
   slicedComments.forEach((comment) => {
@@ -51,13 +53,13 @@ function renderComments() {
   commentsShown += slicedComments.length;
   commentsCount.textContent = commentsShown;
   commentsLoader.classList.toggle('hidden', commentsShown >= currentComments.length);
-}
+};
 
-function onCommentsLoaderClick() {
+const onCommentsLoaderClick = () => {
   renderComments();
-}
+};
 
-function openFullMode(photo) {
+const openFullMode = (photo) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   bigImage.src = photo.url;
@@ -70,7 +72,8 @@ function openFullMode(photo) {
   renderComments();
   close.addEventListener('click', onFullModeCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
+
 commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
 export {openFullMode};
